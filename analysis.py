@@ -5,9 +5,10 @@ import pandas as pd
 import csv
 import os 
 from random import SystemRandom as sys_random
+import operator
 
 # variables
-number_to_generate = 50000000
+number_to_generate = 500000
 board_squares = 40
 
 # Random number generator to simulate two dice throws
@@ -42,13 +43,23 @@ key_min = min(board_hotness.keys(), key=(lambda k: board_hotness[k]))
 print('Maximum Value: ',key_max)
 print('Minimum Value: ',key_min)
 
+# sort by hotness
+sorted_hotspot_list=[]
+sorted_hotspot = sorted(board_hotness.items(), key=operator.itemgetter(1), reverse=True)
+for i in range (0,board_squares):
+    sorted_hotspot_list=sorted_hotspot[i]
+    print ("hotness={}".format(sorted_hotspot_list[0]))
+
 plt.plot(board_hotness.keys(), board_hotness.values())
 plt.show(block=False)
 input('press <ENTER> to continue')
 
+# for large number of steps to simulate, in situation where memory is limited, write to csv file first
+# then read it back, slow but can get around the issue
+
 # cwd=os.getcwd()
 # print (cwd)
-# file_path=os.path.join(cwd, 'individual_stocks_5yr/AAPL_data.csv')
+# file_path=os.path.join(cwd, 'data.csv')
 # with open(file_path, 'r') as f:
 #     reader = csv.reader(f)
 #     for row in reader:
